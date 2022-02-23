@@ -131,7 +131,6 @@ app.delete('/blogs/:id', (request, response) => {
       response.send(`Blog has been deleted, ${result}`)
     })
     .catch(err => {
-      console.log(err)
       response.send(`Could not delete blog. ${err.message}`)
     })
 })

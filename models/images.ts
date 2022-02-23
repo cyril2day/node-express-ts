@@ -10,7 +10,7 @@ export type Image = {
 */
 
 export type BlogImage = {
-  post: typeof mongoose.Schema.Types.ObjectId
+  post: typeof mongoose.Schema.Types.ObjectId | string
   fileName: string
   path: string
 }
