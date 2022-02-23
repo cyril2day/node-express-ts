@@ -10,13 +10,13 @@ export type Image = {
 */
 
 export type BlogImage = {
-  post: typeof mongoose.Schema.Types.ObjectId | string
+  blogId: typeof mongoose.Schema.Types.ObjectId | string
   fileName: string
   path: string
 }
 
 const blogImageSchema = new Schema<BlogImage>({
-  post: {
+  blogId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Blog',
     required: true

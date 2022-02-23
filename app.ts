@@ -4,7 +4,6 @@ import mongoose from 'mongoose'
 import Blog from './models/blog'
 import BlogImage from './models/images'
 import multer from 'multer'
-import path from 'path'
 
 /*
  * The application instance
@@ -51,7 +50,7 @@ const destination = __dirname + '/uploads'
 const storage = multer.diskStorage({
   destination: destination,
   filename: (request, file, cb) => {
-    cb(null, `file-${file.originalname}${path.extname(file.originalname)}`)
+    cb(null, `file-${file.originalname}`)
   }
 })
 const upload = multer({
@@ -145,7 +144,7 @@ app.delete('/blogs/:id', (request, response) => {
 app.get('/blogs/:id/images', (request, response) => {
   const id = request.params.id
 
-  BlogImage.find().select({ post: id })
+  BlogImage.find({ blogId: id })
     .then(result => {
       response.send(`Images of a blog with an id of ${id}. ${result}`)
     })
@@ -160,13 +159,13 @@ app.post('/blogs/:id/upload', upload.single('image'), (request, response) => {
   const id = request.params.id
   const filePath = `${destination}/${filename}`
   const params = {
-    post: id,
+    blogId: id,
     fileName: filename,
     path: filePath
   }
 
   BlogImage.findOneAndUpdate(
-    { fileName: filename, post: id },
+    { fileName: filename, blogId: id },
     { $setOnInsert: params },
     { upsert: true, new: true, rawResult: true }
   )
