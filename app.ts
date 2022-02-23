@@ -159,15 +159,12 @@ app.get('/blogs/:id/images', (request, response) => {
 app.post('/blogs/:id/upload', upload.single('image'), (request, response) => {
   const filename = request.file.filename
   const id = request.params.id
+  const filePath = `${destination}/${filename}`
   const params = {
     post: id,
     fileName: filename,
-    path: `${destination}/${filename}`
+    path: filePath
   }
-
-  // const image = new BlogImage(params)
-
-  console.log(`${destination}/${filename}`)
 
   BlogImage.findOneAndUpdate(
     { fileName: filename, post: id },
