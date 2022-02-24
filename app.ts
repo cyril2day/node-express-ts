@@ -147,6 +147,7 @@ app.get('/blogs/:id/images', (request, response) => {
 
   BlogImage.find({ blogId: id })
     .then(result => {
+      if (!result.length) throw Error()
       response.send(`Images of a blog with an id of ${id}. ${result}`)
     })
     .catch(err => {
