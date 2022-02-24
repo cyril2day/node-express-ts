@@ -95,6 +95,7 @@ app.get('/blogs/:id', (request, response) => {
 
   Blog.findById(id)
     .then(result => {
+      if (!result) throw Error()
       response.send(`Found blog, ${result}`)
     })
     .catch(err => {
